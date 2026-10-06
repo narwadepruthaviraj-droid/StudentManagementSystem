@@ -4,13 +4,12 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Scanner scanner =
-            new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
         StudentManager manager =
             new StudentManager();
 
-        // Load previously saved data
+        // Load saved student data
         manager.loadStudents();
 
         while (true) {
@@ -75,8 +74,7 @@ public class Main {
 
             try {
 
-                choice =
-                    scanner.nextInt();
+                choice = scanner.nextInt();
 
             } catch (Exception e) {
 
@@ -91,15 +89,41 @@ public class Main {
 
             switch (choice) {
 
-                // ADD
+                // =========================
+                // ADD STUDENT
+                // =========================
+
                 case 1:
 
                     System.out.print(
                         "Enter Student ID: "
                     );
 
-                    int id =
-                        scanner.nextInt();
+                    int id;
+
+                    try {
+
+                        id = scanner.nextInt();
+
+                    } catch (Exception e) {
+
+                        System.out.println(
+                            "Invalid ID. Please enter a number."
+                        );
+
+                        scanner.nextLine();
+
+                        break;
+                    }
+
+                    if (!InputValidator.isValidId(id)) {
+
+                        System.out.println(
+                            "Student ID must be greater than 0."
+                        );
+
+                        break;
+                    }
 
                     scanner.nextLine();
 
@@ -110,6 +134,15 @@ public class Main {
                     String name =
                         scanner.nextLine();
 
+                    if (!InputValidator.isValidText(name)) {
+
+                        System.out.println(
+                            "Name cannot be empty."
+                        );
+
+                        break;
+                    }
+
                     System.out.print(
                         "Enter Course: "
                     );
@@ -117,14 +150,40 @@ public class Main {
                     String course =
                         scanner.nextLine();
 
+                    if (!InputValidator.isValidText(course)) {
+
+                        System.out.println(
+                            "Course cannot be empty."
+                        );
+
+                        break;
+                    }
+
                     System.out.print(
                         "Enter Marks (0-100): "
                     );
 
-                    double marks =
-                        scanner.nextDouble();
+                    double marks;
 
-                    if (marks < 0 || marks > 100) {
+                    try {
+
+                        marks =
+                            scanner.nextDouble();
+
+                    } catch (Exception e) {
+
+                        System.out.println(
+                            "Invalid marks."
+                        );
+
+                        scanner.nextLine();
+
+                        break;
+                    }
+
+                    if (
+                        !InputValidator.isValidMarks(marks)
+                    ) {
 
                         System.out.println(
                             "Marks must be between 0 and 100."
@@ -141,14 +200,15 @@ public class Main {
                             marks
                         );
 
-                    manager.addStudent(
-                        student
-                    );
+                    manager.addStudent(student);
 
                     break;
 
 
-                // VIEW
+                // =========================
+                // VIEW STUDENTS
+                // =========================
+
                 case 2:
 
                     manager.viewStudents();
@@ -156,32 +216,66 @@ public class Main {
                     break;
 
 
-                // SEARCH
+                // =========================
+                // SEARCH STUDENT
+                // =========================
+
                 case 3:
 
                     System.out.print(
                         "Enter Student ID to search: "
                     );
 
-                    int searchId =
-                        scanner.nextInt();
+                    int searchId;
 
-                    manager.searchStudent(
-                        searchId
-                    );
+                    try {
+
+                        searchId =
+                            scanner.nextInt();
+
+                    } catch (Exception e) {
+
+                        System.out.println(
+                            "Invalid ID."
+                        );
+
+                        scanner.nextLine();
+
+                        break;
+                    }
+
+                    manager.searchStudent(searchId);
 
                     break;
 
 
-                // UPDATE
+                // =========================
+                // UPDATE STUDENT
+                // =========================
+
                 case 4:
 
                     System.out.print(
                         "Enter Student ID to update: "
                     );
 
-                    int updateId =
-                        scanner.nextInt();
+                    int updateId;
+
+                    try {
+
+                        updateId =
+                            scanner.nextInt();
+
+                    } catch (Exception e) {
+
+                        System.out.println(
+                            "Invalid ID."
+                        );
+
+                        scanner.nextLine();
+
+                        break;
+                    }
 
                     scanner.nextLine();
 
@@ -192,6 +286,15 @@ public class Main {
                     String newName =
                         scanner.nextLine();
 
+                    if (!InputValidator.isValidText(newName)) {
+
+                        System.out.println(
+                            "Name cannot be empty."
+                        );
+
+                        break;
+                    }
+
                     System.out.print(
                         "Enter New Course: "
                     );
@@ -199,16 +302,39 @@ public class Main {
                     String newCourse =
                         scanner.nextLine();
 
+                    if (!InputValidator.isValidText(newCourse)) {
+
+                        System.out.println(
+                            "Course cannot be empty."
+                        );
+
+                        break;
+                    }
+
                     System.out.print(
                         "Enter New Marks (0-100): "
                     );
 
-                    double newMarks =
-                        scanner.nextDouble();
+                    double newMarks;
+
+                    try {
+
+                        newMarks =
+                            scanner.nextDouble();
+
+                    } catch (Exception e) {
+
+                        System.out.println(
+                            "Invalid marks."
+                        );
+
+                        scanner.nextLine();
+
+                        break;
+                    }
 
                     if (
-                        newMarks < 0
-                        || newMarks > 100
+                        !InputValidator.isValidMarks(newMarks)
                     ) {
 
                         System.out.println(
@@ -228,24 +354,43 @@ public class Main {
                     break;
 
 
-                // DELETE
+                // =========================
+                // DELETE STUDENT
+                // =========================
+
                 case 5:
 
                     System.out.print(
                         "Enter Student ID to delete: "
                     );
 
-                    int deleteId =
-                        scanner.nextInt();
+                    int deleteId;
 
-                    manager.deleteStudent(
-                        deleteId
-                    );
+                    try {
+
+                        deleteId =
+                            scanner.nextInt();
+
+                    } catch (Exception e) {
+
+                        System.out.println(
+                            "Invalid ID."
+                        );
+
+                        scanner.nextLine();
+
+                        break;
+                    }
+
+                    manager.deleteStudent(deleteId);
 
                     break;
 
 
+                // =========================
                 // STATISTICS
+                // =========================
+
                 case 6:
 
                     manager.showStatistics();
@@ -253,7 +398,10 @@ public class Main {
                     break;
 
 
-                // SORT MARKS
+                // =========================
+                // SORT BY MARKS
+                // =========================
+
                 case 7:
 
                     manager.sortByMarks();
@@ -261,7 +409,10 @@ public class Main {
                     break;
 
 
-                // SORT NAME
+                // =========================
+                // SORT BY NAME
+                // =========================
+
                 case 8:
 
                     manager.sortByName();
@@ -269,7 +420,10 @@ public class Main {
                     break;
 
 
+                // =========================
                 // EXIT
+                // =========================
+
                 case 9:
 
                     FileManager.saveStudents(
@@ -277,7 +431,7 @@ public class Main {
                     );
 
                     System.out.println(
-                        "\nStudent data saved."
+                        "\nStudent data saved successfully."
                     );
 
                     System.out.println(
